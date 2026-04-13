@@ -15,8 +15,8 @@
       --court-color:      #16213e;   /* inner play area */
       --net-color:        #0f3460;   /* center dashed line */
       --ball-color:       #e94560;   /* ball fill */
-      --paddle-p1-color:  #3a0404;   /* left paddle  (Player 1) */
-      --paddle-p2-color:  #135705;   /* right paddle (Player 2) */
+      --paddle-chichi-color:  #3a0404;   /* left paddle  (Player 1) */
+      --paddle-bruno-color:  #135705;   /* right paddle (Player 2) */
       --score-color:      #ffffff;   /* score & UI text */
       --ui-font:          'Courier New', Courier, monospace;
     }
@@ -132,7 +132,7 @@
       running:   false,   // true while game loop is active
       paused:    false,   // true when SPACE toggles pause mid-game
       gameOver:  false,
-      scores:    { p1: 0, p2: 0 },
+      scores:    { chichi: 0, bruno: 0 },
     };
  
     /* ─────────────────────────────────────────
@@ -165,13 +165,13 @@
       dy: 0,   // current vertical velocity (set by key handlers)
     };
  
-    const p1 = {
+    const chichi = {
       ...paddleDefaults,
       x: SETTINGS.paddle.margin,
       y: canvas.height / 2 - SETTINGS.paddle.height / 2,
     };
  
-    const p2 = {
+    const bruno = {
       ...paddleDefaults,
       x: canvas.width - SETTINGS.paddle.margin - SETTINGS.paddle.width,
       y: canvas.height / 2 - SETTINGS.paddle.height / 2,
@@ -226,18 +226,18 @@
  
     function movePaddles() {
       // Player 1: W (up) / S (down)
-      if (keys['w'] || keys['W']) p1.dy = -SETTINGS.paddle.speed;
-      else if (keys['s'] || keys['S']) p1.dy =  SETTINGS.paddle.speed;
-      else p1.dy = 0;
+      if (keys['w'] || keys['W']) chichi.dy = -SETTINGS.paddle.speed;
+      else if (keys['s'] || keys['S']) chichi.dy =  SETTINGS.paddle.speed;
+      else chichi.dy = 0;
  
       // Player 2: ArrowUp / ArrowDown
-      if (keys['ArrowUp'])   p2.dy = -SETTINGS.paddle.speed;
-      else if (keys['ArrowDown']) p2.dy =  SETTINGS.paddle.speed;
-      else p2.dy = 0;
+      if (keys['ArrowUp'])   bruno.dy = -SETTINGS.paddle.speed;
+      else if (keys['ArrowDown']) bruno.dy =  SETTINGS.paddle.speed;
+      else bruno.dy = 0;
  
       // Apply movement and keep paddles inside the court
-      p1.y = clamp(p1.y + p1.dy, 0, canvas.height - p1.h);
-      p2.y = clamp(p2.y + p2.dy, 0, canvas.height - p2.h);
+      chichi.y = clamp(chichi.y + chichi.dy, 0, canvas.height - chichi.h);
+      bruno.y = clamp(bruno.y + bruno.dy, 0, canvas.height - bruno.h);
     }
  
     function moveBall() {
@@ -256,34 +256,34 @@
  
       // ── Paddle collision (Player 1)
       if (
-        ball.x - ball.r <= p1.x + p1.w &&
-        ball.x + ball.r >= p1.x         &&
-        ball.y          >= p1.y          &&
-        ball.y          <= p1.y + p1.h
+        ball.x - ball.r <= chichi.x + chichi.w &&
+        ball.x + ball.r >= chichi.x         &&
+        ball.y          >= chichi.y          &&
+        ball.y          <= chichi.y + chichi.h
       ) {
-        ball.x  = p1.x + p1.w + ball.r;  // push ball out of paddle
-        bounceBallOff(p1, 1);
+        ball.x  = chichi.x + chichi.w + ball.r;  // push ball out of paddle
+        bounceBallOff(chichi, 1);
       }
  
       // ── Paddle collision (Player 2)
       if (
-        ball.x + ball.r >= p2.x         &&
-        ball.x - ball.r <= p2.x + p2.w  &&
-        ball.y          >= p2.y          &&
-        ball.y          <= p2.y + p2.h
+        ball.x + ball.r >= bruno.x         &&
+        ball.x - ball.r <= bruno.x + bruno.w  &&
+        ball.y          >= bruno.y          &&
+        ball.y          <= bruno.y + bruno.h
       ) {
-        ball.x  = p2.x - ball.r;         // push ball out of paddle
-        bounceBallOff(p2, -1);
+        ball.x  = bruno.x - ball.r;         // push ball out of paddle
+        bounceBallOff(bruno, -1);
       }
  
-      // ── Score: ball leaves left side → P2 scores
+      // ── Score: ball leaves left side → bruno scores
       if (ball.x - ball.r < 0) {
-        score('p2');
+        score('bruno');
         return;
       }
-      // ── Score: ball leaves right side → P1 scores
+      // ── Score: ball leaves right side → chichi scores
       if (ball.x + ball.r > canvas.width) {
-        score('p1');
+        score('chichi');
       }
     }
  
@@ -320,7 +320,7 @@
         endGame(player);
       } else {
         // Serve toward the player who just lost the point
-        ball.reset(player === 'p1');   // scored on p2 → serve left; p1 → right
+        ball.reset(player === 'chichi');   // scored on bruno → serve left; chichi → right
         resetPaddles();
       }
     }
@@ -347,25 +347,25 @@
       ctx.fillStyle = cssVar('--score-color');
       ctx.font      = 'bold 48px ' + cssVar('--ui-font');
       ctx.textAlign = 'center';
-      ctx.fillText(state.scores.p1, canvas.width / 4,       60);
-      ctx.fillText(state.scores.p2, canvas.width * 3 / 4,   60);
+      ctx.fillText(state.scores.chichi, canvas.width / 4,       60);
+      ctx.fillText(state.scores.bruno, canvas.width * 3 / 4,   60);
  
       // ── Player labels (subtle)
       ctx.font      = '12px ' + cssVar('--ui-font');
       ctx.globalAlpha = 0.4;
-      ctx.fillText('P1', canvas.width / 4,     80);
-      ctx.fillText('P2', canvas.width * 3 / 4, 80);
+      ctx.fillText('chichi', canvas.width / 4,     80);
+      ctx.fillText('bruno', canvas.width * 3 / 4, 80);
       ctx.globalAlpha = 1;
  
       // ── Paddles
-      ctx.fillStyle = cssVar('--paddle-p1-color');
+      ctx.fillStyle = cssVar('--paddle-chichi-color');
       ctx.beginPath();
-      ctx.roundRect(p1.x, p1.y, p1.w, p1.h, 4);
+      ctx.roundRect(chichi.x, chichi.y, chichi.w, chichi.h, 4);
       ctx.fill();
  
-      ctx.fillStyle = cssVar('--paddle-p2-color');
+      ctx.fillStyle = cssVar('--paddle-bruno-color');
       ctx.beginPath();
-      ctx.roundRect(p2.x, p2.y, p2.w, p2.h, 4);
+      ctx.roundRect(bruno.x, bruno.y, bruno.w, bruno.h, 4);
       ctx.fill();
  
       // ── Ball (circle with a glow effect)
@@ -429,13 +429,13 @@
       // Draw one final frame so the last score is visible
       draw();
  
-      const label = winner === 'p1' ? 'PLAYER 1' : 'PLAYER 2';
+      const label = winner === 'chichi' ? 'PLAYER 1' : 'PLAYER 2';
       message.textContent = `🏆 ${label} WINS!  Press SPACE to play again.`;
     }
  
     function resetGame() {
       cancelAnimationFrame(animId);
-      state.scores   = { p1: 0, p2: 0 };
+      state.scores   = { chichi: 0, bruno: 0 };
       state.gameOver = false;
       state.paused   = false;
       resetPaddles();
@@ -445,10 +445,10 @@
     }
  
     function resetPaddles() {
-      p1.y = canvas.height / 2 - p1.h / 2;
-      p2.y = canvas.height / 2 - p2.h / 2;
-      p1.dy = 0;
-      p2.dy = 0;
+      chichi.y = canvas.height / 2 - chichi.h / 2;
+      bruno.y = canvas.height / 2 - bruno.h / 2;
+      chichi.dy = 0;
+      bruno.dy = 0;
     }
  
     /* ─────────────────────────────────────────
