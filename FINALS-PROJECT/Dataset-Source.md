@@ -1,0 +1,13 @@
+https://www.kaggle.com/datasets/yusufmurtaza01/youtube-top-channels-2026
+https://www.kaggle.com/datasets/nalisha/job-salary-prediction-dataset
+https://www.kaggle.com/datasets/borovai0/student-performance-analytics-dataset
+https://www.kaggle.com/datasets/guriya79/how-ai-is-changing-student-life
+https://www.kaggle.com/datasets/ihasan88/student-performance-dataset
+https://www.kaggle.com/datasets/asifxzaman/university-students-performance-and-study-habits2026
+https://www.kaggle.com/datasets/zahranusratt/smartphone-usage-and-addiction-analysis-dataset
+https://www.kaggle.com/datasets/himanshuuike/superstore-sales-dataset
+https://www.kaggle.com/datasets/zkskhurram/world-vs-asia-fuel-prices
+https://www.kaggle.com/datasets/waddahali/2026-intelligence-economy-labor-vs-ai-compute
+https://www.kaggle.com/datasets/alitaqishah/tech-layoffs-2026-ai-job-cuts-tracker
+https://www.kaggle.com/datasets/obaidhere/amazon-bestsellers-price-vs-user-rating-analysis
+https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification
