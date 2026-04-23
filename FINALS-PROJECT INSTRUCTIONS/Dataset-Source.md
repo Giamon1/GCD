@@ -11,3 +11,7 @@ https://www.kaggle.com/datasets/waddahali/2026-intelligence-economy-labor-vs-ai-
 https://www.kaggle.com/datasets/alitaqishah/tech-layoffs-2026-ai-job-cuts-tracker
 https://www.kaggle.com/datasets/obaidhere/amazon-bestsellers-price-vs-user-rating-analysis
 https://www.kaggle.com/datasets/iabhishekofficial/mobile-price-classification
+
+
+
+https://www.kaggle.com/datasets/obaidhere/amazon-bestsellers-price-vs-user-rating-analysis

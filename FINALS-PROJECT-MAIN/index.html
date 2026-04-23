@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GCD</title>
+
+  <style>
+    body {
+      background: #0b0f19;
+      color: #e6edf3;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ffffff;
+    }
+
+    .controls {
+      margin: 15px 0;
+    }
+
+    input, select, button {
+      padding: 8px;
+      margin-right: 8px;
+      border-radius: 6px;
+      border: none;
+    }
+
+    button {
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border-bottom: 1px solid #31371f;
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      color: #a6d3d2;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Amazon Bestselling Books (2009-2019)</h1>
+
+  <!-- Controls -->
+  <div class="controls">
+    <input id="filter-input" type="text" placeholder="Filter by book name..." />
+
+    <select id="sort-select">
+      <option value="">Sort by...</option>
+      <option value="name">Name</option>
+      <option value="author">Author</option>
+      <option value="rating">Rating</option>
+      <option value="reviews">Reviews</option>
+      <option value="price">Price</option>
+      <option value="year">Year</option>
+      <option value="genre">Genre</option>
+    </select>
+
+    <button id="apply-btn">Apply</button>
+    <button id="reset-btn">Reset</button>
+  </div>
+
+  <!-- Table -->
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Rating</th>
+        <th>Reviews</th>
+        <th>Price</th>
+        <th>Year</th>
+        <th>Genre</th>
+      </tr>
+    </thead>
+
+    <tbody id="table-body">
+      <tr>
+        <td colspan="8">⏳ Loading dataset...</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button id="toggle-btn">Show more</button> 
+
+  <!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
+<script src="js/Student-1-Permison-dataset.js"></script>
+<script src="js/Student-2-visualization.js"></script>
+<script src="js/Student-3-statistics.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
