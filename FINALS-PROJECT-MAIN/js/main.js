@@ -8,13 +8,13 @@ async function init() {
 
   CURRENT = [...RAW];
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT); 
+  initCharts(CURRENT);
   renderStats(CURRENT);
 
   updateToggleVisibility();
 }
 
-// APPLY FILTER + SORT
+// APPLY
 document.getElementById("apply-btn").onclick = () => {
   let data = [...RAW];
 
@@ -28,7 +28,7 @@ document.getElementById("apply-btn").onclick = () => {
   expanded = false;
 
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT); // FIXED
+  initCharts(CURRENT);
   renderStats(CURRENT);
 
   updateToggleVisibility();
@@ -40,7 +40,7 @@ document.getElementById("reset-btn").onclick = () => {
   expanded = false;
 
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT); 
+  initCharts(CURRENT);
   renderStats(CURRENT);
 
   updateToggleVisibility();
@@ -56,7 +56,6 @@ document.getElementById("toggle-btn").onclick = () => {
   renderTable(CURRENT, expanded, LIMIT);
 };
 
-// SHOW/HIDE BUTTON
 function updateToggleVisibility() {
   const btn = document.getElementById("toggle-btn");
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>GCD</title>
+  <title>GCD Project</title>
 
   <style>
     body {
@@ -13,7 +13,7 @@
       padding: 20px;
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       color: #ffffff;
     }
 
@@ -55,6 +55,22 @@
       display: inline-block;
       margin: 20px;
     }
+
+    /* STATS UI */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .card {
+      background: #111827;
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      font-size: 14px;
+    }
   </style>
 </head>
 
@@ -62,7 +78,7 @@
 
   <h1>Amazon Bestselling Books (2009-2019)</h1>
 
-  <!-- Controls -->
+  <!-- CONTROLS -->
   <div class="controls">
     <input id="filter-input" type="text" placeholder="Filter by book name..." />
 
@@ -81,7 +97,7 @@
     <button id="reset-btn">Reset</button>
   </div>
 
-  <!-- Table -->
+  <!-- TABLE -->
   <table>
     <thead>
       <tr>
@@ -98,7 +114,7 @@
 
     <tbody id="table-body">
       <tr>
-        <td colspan="8">⏳ Loading dataset...</td>
+        <td colspan="8">Loading dataset...</td>
       </tr>
     </tbody>
   </table>
@@ -106,7 +122,7 @@
   <button id="toggle-btn">Show more</button>
 
   <!-- CHARTS -->
-  <h2>📊 Visualizations</h2>
+  <h2>Visualizations</h2>
 
   <div class="chart-container">
     <canvas id="barChart"></canvas>
@@ -124,12 +140,41 @@
     <canvas id="pieChart"></canvas>
   </div>
 
+  <!-- STATS -->
+  <h2>Statistics Dashboard</h2>
+
+  <div class="stats-grid">
+    <div class="card">Mean: <span id="statMean">—</span></div>
+    <div class="card">Median: <span id="statMedian">—</span></div>
+    <div class="card">Std Dev: <span id="statStdDev">—</span></div>
+    <div class="card">Mode: <span id="statMode">—</span></div>
+  </div>
+
+  <h3>Descriptive Statistics</h3>
+  <div class="stats-grid">
+    <div class="card">Count: <span id="dCount">—</span></div>
+    <div class="card">Min: <span id="dMin">—</span></div>
+    <div class="card">Max: <span id="dMax">—</span></div>
+    <div class="card">Range: <span id="dRange">—</span></div>
+    <div class="card">Variance: <span id="dVariance">—</span></div>
+    <div class="card">Std Dev: <span id="dStdDev">—</span></div>
+  </div>
+
+  <h3>Correlation & Regression</h3>
+  <div class="stats-grid">
+    <div class="card">Pearson r: <span id="rPearson">—</span></div>
+    <div class="card">Type: <span id="rInterp">—</span></div>
+    <div class="card">Slope: <span id="rSlope">—</span></div>
+    <div class="card">Intercept: <span id="rIntercept">—</span></div>
+    <div class="card">R²: <span id="rSquared">—</span></div>
+    <div class="card">Equation: <span id="rEquation">—</span></div>
+  </div>
+
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <script src="js/Student-1-Permison-dataset.js"></script>
-  <script src="js/Student-2-visualizations.js"></script> 
+  <script src="js/Student-2-visualizations.js"></script>
   <script src="js/Student-3-statistics.js"></script>
   <script src="js/main.js"></script>
 
