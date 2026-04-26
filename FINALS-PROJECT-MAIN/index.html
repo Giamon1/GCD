@@ -13,7 +13,7 @@
       padding: 20px;
     }
 
-    h1 {
+    h1, h2 {
       color: #ffffff;
     }
 
@@ -48,6 +48,12 @@
 
     th {
       color: #a6d3d2;
+    }
+
+    .chart-container {
+      width: 45%;
+      display: inline-block;
+      margin: 20px;
     }
   </style>
 </head>
@@ -97,14 +103,35 @@
     </tbody>
   </table>
 
-  <button id="toggle-btn">Show more</button> 
+  <button id="toggle-btn">Show more</button>
 
-  <!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0"></script>
-<script src="js/Student-1-Permison-dataset.js"></script>
-<script src="js/Student-2-visualization.js"></script>
-<script src="js/Student-3-statistics.js"></script>
-<script src="js/main.js"></script>
+  <!-- CHARTS -->
+  <h2>📊 Visualizations</h2>
+
+  <div class="chart-container">
+    <canvas id="barChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="scatterPlot"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="histogram"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <canvas id="pieChart"></canvas>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <script src="js/Student-1-Permison-dataset.js"></script>
+  <script src="js/Student-2-visualizations.js"></script> 
+  <script src="js/Student-3-statistics.js"></script>
+  <script src="js/main.js"></script>
 
 </body>
 </html>
