@@ -4,8 +4,7 @@ let barChart, scatterChart, histogramChart, pieChart;
 function drawBarChart(data) {
   const ctx = document.getElementById('barChart').getContext('2d');
 
-  if (barChart) barChart.destroy(); // prevent stacking
-
+  if (barChart) barChart.destroy(); 
   const genreMap = {};
 
   data.forEach(d => {
@@ -84,10 +83,10 @@ function drawHistogram(data) {
   // Extract ratings
   const values = data.map(d => d.rating);
 
-  // Create many small bins (like real histogram)
+  
   const min = 3.0;
   const max = 5.0;
-  const binSize = 0.1; // smaller = smoother
+  const binSize = 0.1; 
   const bins = [];
 
   for (let i = min; i <= max; i += binSize) {
@@ -153,7 +152,7 @@ function drawHistogram(data) {
       },
       elements: {
         bar: {
-          borderRadius: 0, // sharp edges like real histogram
+          borderRadius: 0, edges
         }
       },
       barPercentage: 1.0,

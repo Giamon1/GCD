@@ -8,7 +8,7 @@ async function init() {
 
   CURRENT = [...RAW];
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT); // FIXED
+  initCharts(CURRENT); 
   renderStats(CURRENT);
 
   updateToggleVisibility();
@@ -40,7 +40,7 @@ document.getElementById("reset-btn").onclick = () => {
   expanded = false;
 
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT); // FIXED
+  initCharts(CURRENT);
   renderStats(CURRENT);
 
   updateToggleVisibility();
