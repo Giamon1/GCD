@@ -4,7 +4,8 @@ let barChart, scatterChart, histogramChart, pieChart;
 function drawBarChart(data) {
   const ctx = document.getElementById('barChart').getContext('2d');
 
-  if (barChart) barChart.destroy(); 
+  if (barChart) barChart.destroy();
+
   const genreMap = {};
 
   data.forEach(d => {
@@ -152,7 +153,7 @@ function drawHistogram(data) {
       },
       elements: {
         bar: {
-          borderRadius: 0, edges
+          borderRadius: 0,
         }
       },
       barPercentage: 1.0,

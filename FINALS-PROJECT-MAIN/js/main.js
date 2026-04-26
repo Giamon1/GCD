@@ -40,7 +40,7 @@ document.getElementById("reset-btn").onclick = () => {
   expanded = false;
 
   renderTable(CURRENT, expanded, LIMIT);
-  initCharts(CURRENT);
+  initCharts(CURRENT); 
   renderStats(CURRENT);
 
   updateToggleVisibility();
