@@ -1,17 +1,15 @@
 let RAW = [];
 let CURRENT = [];
-let expanded = false;
-const LIMIT = 10;
 
+// INIT
 async function init() {
   RAW = await loadDataset();
 
   CURRENT = [...RAW];
-  renderTable(CURRENT, expanded, LIMIT);
+
+  renderTable(CURRENT);
   initCharts(CURRENT);
   renderStats(CURRENT);
-
-  updateToggleVisibility();
 }
 
 // APPLY
@@ -25,46 +23,22 @@ document.getElementById("apply-btn").onclick = () => {
   if (s) data = sortData(data, s);
 
   CURRENT = data;
-  expanded = false;
 
-  renderTable(CURRENT, expanded, LIMIT);
+  renderTable(CURRENT);
   initCharts(CURRENT);
   renderStats(CURRENT);
-
-  updateToggleVisibility();
 };
 
 // RESET
 document.getElementById("reset-btn").onclick = () => {
   CURRENT = [...RAW];
-  expanded = false;
 
-  renderTable(CURRENT, expanded, LIMIT);
+  document.getElementById("filter-input").value = "";
+  document.getElementById("sort-select").value = "";
+
+  renderTable(CURRENT);
   initCharts(CURRENT);
   renderStats(CURRENT);
-
-  updateToggleVisibility();
 };
-
-// TOGGLE
-document.getElementById("toggle-btn").onclick = () => {
-  expanded = !expanded;
-
-  document.getElementById("toggle-btn").textContent =
-    expanded ? "Show less" : "Show more";
-
-  renderTable(CURRENT, expanded, LIMIT);
-};
-
-function updateToggleVisibility() {
-  const btn = document.getElementById("toggle-btn");
-
-  if (CURRENT.length <= LIMIT) {
-    btn.style.display = "none";
-  } else {
-    btn.style.display = "inline-block";
-    btn.textContent = expanded ? "Show less" : "Show more";
-  }
-}
 
 init();

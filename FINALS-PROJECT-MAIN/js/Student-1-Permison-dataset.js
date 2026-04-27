@@ -26,15 +26,13 @@ async function loadDataset() {
   }
 }
 
-//RENDER TABLE
-function renderTable(data, expanded = false, LIMIT = 10) {
+// RENDER TABLE 
+function renderTable(data) {
   const tableBody = document.getElementById("table-body");
-
-  let displayData = expanded ? data : data.slice(0, LIMIT);
 
   let html = "";
 
-  displayData.forEach((item, index) => {
+  data.forEach((item, index) => {
     html += `
       <tr>
         <td>${index + 1}</td>
@@ -56,7 +54,7 @@ function renderTable(data, expanded = false, LIMIT = 10) {
   `;
 }
 
-//FILTER
+// FILTER
 function filterData(data, q) {
   const query = q.toLowerCase();
 
@@ -67,7 +65,7 @@ function filterData(data, q) {
   );
 }
 
-//SORT
+// SORT
 function sortData(data, key) {
   return [...data].sort((a, b) => {
     if (a[key] == null) return 1;
