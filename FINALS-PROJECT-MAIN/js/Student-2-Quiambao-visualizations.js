@@ -7,7 +7,7 @@ function initCharts(data) {
   drawPie(data);
 }
 
-//BARCHART
+// BAR CHART
 function drawBar(data) {
   if (barChart) barChart.destroy();
 
@@ -30,24 +30,13 @@ function drawBar(data) {
       labels,
       datasets: [{
         label: "Average Sales",
-        data: values,
-        backgroundColor: "#60a5fa"
+        data: values
       }]
-    },
-    options: {
-      plugins: {
-        legend: { labels: { color: "white" } }
-      },
-      scales: {
-        x: { ticks: { color: "white" } },
-        y: { ticks: { color: "white" }, beginAtZero: true }
-      }
     }
   });
 }
 
-//SCATTERPLOT
-
+// SCATTER PLOT
 function drawScatter(data) {
   if (scatterChart) scatterChart.destroy();
 
@@ -61,34 +50,18 @@ function drawScatter(data) {
         data: data.map(d => ({
           x: d.sales,
           y: d.profit
-        })),
-        backgroundColor: "#34d399"
+        }))
       }]
-    },
-    options: {
-      scales: {
-        x: {
-          title: { display: true, text: "Sales", color: "white" },
-          ticks: { color: "white" }
-        },
-        y: {
-          title: { display: true, text: "Profit", color: "white" },
-          ticks: { color: "white" }
-        }
-      }
     }
   });
 }
 
-//HISTOGRAM
-
+// HISTOGRAM
 function drawHistogram(data) {
   if (histogramChart) histogramChart.destroy();
 
-  const canvas = document.getElementById("histogram");
-  const ctx = canvas.getContext("2d");
+  const ctx = document.getElementById("histogram").getContext("2d");
 
-  // extract values safely
   const values = data
     .map(d => d.sales)
     .filter(v => !isNaN(v));
@@ -120,32 +93,12 @@ function drawHistogram(data) {
       labels,
       datasets: [{
         label: "Frequency",
-        data: counts,
-        backgroundColor: "#f59e0b"
+        data: counts
       }]
     },
     options: {
       plugins: {
         legend: { display: false }
-      },
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: "Sales Range",
-            color: "white"
-          },
-          ticks: { color: "white" }
-        },
-        y: {
-          title: {
-            display: true,
-            text: "Frequency",
-            color: "white"
-          },
-          beginAtZero: true,
-          ticks: { color: "white" }
-        }
       },
       barPercentage: 1.0,
       categoryPercentage: 1.0
@@ -153,7 +106,7 @@ function drawHistogram(data) {
   });
 }
 
-// PIECHART
+// PIE CHART
 function drawPie(data) {
   if (pieChart) pieChart.destroy();
 
@@ -169,21 +122,8 @@ function drawPie(data) {
     data: {
       labels: Object.keys(map),
       datasets: [{
-        data: Object.values(map),
-        backgroundColor: [
-          "#60a5fa",
-          "#34d399",
-          "#f59e0b",
-          "#f87171"
-        ]
+        data: Object.values(map)
       }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: { color: "white" }
-        }
-      }
     }
   });
 }
