@@ -56,7 +56,7 @@ function drawScatter(data) {
   });
 }
 
-// HISTOGRAM
+// HISTOGRAM (UPDATED ONLY THIS PART)
 function drawHistogram(data) {
   if (histogramChart) histogramChart.destroy();
 
@@ -92,13 +92,39 @@ function drawHistogram(data) {
     data: {
       labels,
       datasets: [{
-        label: "Frequency",
+        label: "Number of Sales in Range",
         data: counts
       }]
     },
     options: {
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const i = context.dataIndex;
+              const start = (min + i * binSize).toFixed(0);
+              const end = (min + (i + 1) * binSize).toFixed(0);
+              const count = context.raw;
+
+              return `Sales ${start}-${end}: ${count}`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: "Sales Range"
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Frequency"
+          }
+        }
       },
       barPercentage: 1.0,
       categoryPercentage: 1.0
@@ -106,7 +132,7 @@ function drawHistogram(data) {
   });
 }
 
-// PIE CHART
+// PIE CHART (FIXED PARAM ONLY)
 function drawPie(data) {
   if (pieChart) pieChart.destroy();
 
