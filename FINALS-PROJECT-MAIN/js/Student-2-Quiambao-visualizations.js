@@ -45,18 +45,33 @@ function drawScatter(data) {
   scatterChart = new Chart(ctx, {
     type: "scatter",
     data: {
-      datasets: [{
-        label: "Sales vs Profit",
-        data: data.map(d => ({
-          x: d.sales,
-          y: d.profit
-        }))
-      }]
+      datasets: [
+        {
+          label: "Profit",
+          data: data
+            .filter(d => d.profit >= 0)
+            .map(d => ({
+              x: d.sales,
+              y: d.profit
+            })),
+          backgroundColor: "green"
+        },
+        {
+          label: "Loss",
+          data: data
+            .filter(d => d.profit < 0)
+            .map(d => ({
+              x: d.sales,
+              y: d.profit
+            })),
+          backgroundColor: "red"
+        }
+      ]
     }
   });
 }
 
-// HISTOGRAM (UPDATED ONLY THIS PART)
+// HISTOGRAM
 function drawHistogram(data) {
   if (histogramChart) histogramChart.destroy();
 
@@ -83,9 +98,12 @@ function drawHistogram(data) {
     counts[index]++;
   });
 
-  const labels = counts.map((_, i) =>
-    (min + i * binSize).toFixed(0)
-  );
+  
+  const labels = counts.map((_, i) => {
+    const start = (min + i * binSize).toFixed(0);
+    const end = (min + (i + 1) * binSize).toFixed(0);
+    return `${start} - ${end}`;
+  });
 
   histogramChart = new Chart(ctx, {
     type: "bar",
@@ -102,12 +120,7 @@ function drawHistogram(data) {
         tooltip: {
           callbacks: {
             label: function(context) {
-              const i = context.dataIndex;
-              const start = (min + i * binSize).toFixed(0);
-              const end = (min + (i + 1) * binSize).toFixed(0);
-              const count = context.raw;
-
-              return `Sales ${start}-${end}: ${count}`;
+              return `Count: ${context.raw}`;
             }
           }
         }
@@ -131,8 +144,7 @@ function drawHistogram(data) {
     }
   });
 }
-
-// PIE CHART (FIXED PARAM ONLY)
+// PIE CHART 
 function drawPie(data) {
   if (pieChart) pieChart.destroy();
 
