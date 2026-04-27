@@ -6,16 +6,16 @@ function drawBarChart(data) {
 
   if (barChart) barChart.destroy();
 
-  const genreMap = {};
+  const categoryMap = {};
 
   data.forEach(d => {
-    if (!genreMap[d.genre]) genreMap[d.genre] = [];
-    genreMap[d.genre].push(d.reviews);
+    if (!categoryMap[d.category]) categoryMap[d.category] = [];
+    categoryMap[d.category].push(d.sales);
   });
 
-  const labels = Object.keys(genreMap);
+  const labels = Object.keys(categoryMap);
   const values = labels.map(g => {
-    const arr = genreMap[g];
+    const arr = categoryMap[g];
     return arr.reduce((a, b) => a + b, 0) / arr.length;
   });
 
@@ -24,18 +24,9 @@ function drawBarChart(data) {
     data: {
       labels,
       datasets: [{
-        label: 'Average Reviews',
+        label: 'Average Sales',
         data: values
       }]
-    },
-    options: {
-      plugins: {
-        legend: { labels: { color: 'white' } }
-      },
-      scales: {
-        x: { ticks: { color: 'white' } },
-        y: { ticks: { color: 'white' } }
-      }
     }
   });
 }
@@ -50,27 +41,12 @@ function drawScatterPlot(data) {
     type: 'scatter',
     data: {
       datasets: [{
-        label: 'Books',
+        label: 'Orders',
         data: data.map(d => ({
-          x: d.reviews,
-          y: d.rating
+          x: d.sales,
+          y: d.profit
         }))
       }]
-    },
-    options: {
-      plugins: {
-        legend: { labels: { color: 'white' } }
-      },
-      scales: {
-        x: {
-          title: { display: true, text: 'Reviews', color: 'white' },
-          ticks: { color: 'white' }
-        },
-        y: {
-          title: { display: true, text: 'Rating', color: 'white' },
-          ticks: { color: 'white' }
-        }
-      }
     }
   });
 }
@@ -81,15 +57,13 @@ function drawHistogram(data) {
 
   if (histogramChart) histogramChart.destroy();
 
-  // Extract ratings
-  const values = data.map(d => d.rating);
+  const values = data.map(d => d.sales);
 
-  
-  const min = 3.0;
-  const max = 5.0;
-  const binSize = 0.1; 
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const binSize = (max - min) / 10;
+
   const bins = [];
-
   for (let i = min; i <= max; i += binSize) {
     bins.push(i);
   }
@@ -111,56 +85,14 @@ function drawHistogram(data) {
   histogramChart = new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: bins.slice(0, -1).map(b => b.toFixed(1)),
+      labels: bins.slice(0, -1).map(b => b.toFixed(0)),
       datasets: [{
-        label: 'Frequency',
-        data: counts,
-        borderWidth: 0
+        data: counts
       }]
-    },
-    options: {
-      plugins: {
-        title: {
-          display: true,
-          text: 'Histogram of Book Ratings',
-          color: 'white'
-        },
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Rating',
-            color: 'white'
-          },
-          ticks: {
-            color: 'white',
-            maxRotation: 0,
-            autoSkip: true
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'Frequency',
-            color: 'white'
-          },
-          ticks: { color: 'white' }
-        }
-      },
-      elements: {
-        bar: {
-          borderRadius: 0,
-        }
-      },
-      barPercentage: 1.0,
-      categoryPercentage: 1.0
     }
   });
 }
+
 // PIE CHART
 function drawPieChart(data) {
   const ctx = document.getElementById('pieChart').getContext('2d');
@@ -170,7 +102,7 @@ function drawPieChart(data) {
   const counts = {};
 
   data.forEach(d => {
-    counts[d.genre] = (counts[d.genre] || 0) + 1;
+    counts[d.category] = (counts[d.category] || 0) + 1;
   });
 
   pieChart = new Chart(ctx, {
@@ -180,11 +112,6 @@ function drawPieChart(data) {
       datasets: [{
         data: Object.values(counts)
       }]
-    },
-    options: {
-      plugins: {
-        legend: { labels: { color: 'white' } }
-      }
     }
   });
 }

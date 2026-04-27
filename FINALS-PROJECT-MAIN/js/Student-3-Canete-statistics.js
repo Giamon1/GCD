@@ -1,30 +1,37 @@
 function mean(arr) {
-  return (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2);
+  return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
 }
 
 function median(arr) {
+  if (!arr.length) return 0;
   const s = [...arr].sort((a, b) => a - b);
   const mid = Math.floor(s.length / 2);
-  return (s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2).toFixed(2);
+  return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
 }
 
 function mode(arr) {
+  if (!arr.length) return "";
   const freq = {};
   arr.forEach(n => freq[n] = (freq[n] || 0) + 1);
   const max = Math.max(...Object.values(freq));
-  return Object.keys(freq).filter(k => freq[k] === max).join(" & ");
+  return Object.keys(freq)
+    .filter(k => freq[k] === max)
+    .join(" & ");
 }
 
 function variance(arr) {
+  if (!arr.length) return 0;
   const m = mean(arr);
-  return (arr.reduce((s, x) => s + (x - m) ** 2, 0) / arr.length).toFixed(2);
+  return arr.reduce((s, x) => s + (x - m) ** 2, 0) / arr.length;
 }
 
 function stdDev(arr) {
-  return Math.sqrt(variance(arr)).toFixed(2);
+  return Math.sqrt(variance(arr));
 }
 
 function pearsonCorr(x, y) {
+  if (!x.length || x.length !== y.length) return 0;
+
   const mx = mean(x);
   const my = mean(y);
 
@@ -39,10 +46,14 @@ function pearsonCorr(x, y) {
     dy += b * b;
   }
 
-  return (num / Math.sqrt(dx * dy)).toFixed(4);
+  return dx && dy ? num / Math.sqrt(dx * dy) : 0;
 }
 
 function linearRegression(x, y) {
+  if (!x.length || x.length !== y.length) {
+    return { slope: 0, intercept: 0, rSquared: 0 };
+  }
+
   const mx = mean(x);
   const my = mean(y);
 
@@ -53,40 +64,42 @@ function linearRegression(x, y) {
     den += (x[i] - mx) ** 2;
   }
 
-  const slope = num / den;
+  const slope = den ? num / den : 0;
   const intercept = my - slope * mx;
   const r = pearsonCorr(x, y);
 
   return {
-    slope: slope.toFixed(4),
-    intercept: intercept.toFixed(4),
-    rSquared: (r * r).toFixed(4)
+    slope,
+    intercept,
+    rSquared: r * r
   };
 }
 
 function renderStats(data) {
-  const scores = data.map(d => d.rating);
-  const hours = data.map(d => d.reviews);
+  if (!data || !data.length) return;
 
-  document.getElementById("statMean").textContent = mean(scores);
-  document.getElementById("statMedian").textContent = median(scores);
-  document.getElementById("statStdDev").textContent = stdDev(scores);
+  const scores = data.map(d => d.sales);
+  const profits = data.map(d => d.profit);
+
+  document.getElementById("statMean").textContent = mean(scores).toFixed(2);
+  document.getElementById("statMedian").textContent = median(scores).toFixed(2);
+  document.getElementById("statStdDev").textContent = stdDev(scores).toFixed(2);
   document.getElementById("statMode").textContent = mode(scores);
 
   const min = Math.min(...scores);
   const max = Math.max(...scores);
 
   document.getElementById("dCount").textContent = scores.length;
-  document.getElementById("dMin").textContent = min;
-  document.getElementById("dMax").textContent = max;
-  document.getElementById("dRange").textContent = max - min;
-  document.getElementById("dVariance").textContent = variance(scores);
-  document.getElementById("dStdDev").textContent = stdDev(scores);
+  document.getElementById("dMin").textContent = min.toFixed(2);
+  document.getElementById("dMax").textContent = max.toFixed(2);
+  document.getElementById("dRange").textContent = (max - min).toFixed(2);
+  document.getElementById("dVariance").textContent = variance(scores).toFixed(2);
+  document.getElementById("dStdDev").textContent = stdDev(scores).toFixed(2);
 
-  const r = pearsonCorr(hours, scores);
-  const reg = linearRegression(hours, scores);
+  const r = pearsonCorr(profits, scores);
+  const reg = linearRegression(profits, scores);
 
-  document.getElementById("rPearson").textContent = r;
+  document.getElementById("rPearson").textContent = r.toFixed(4);
 
   const strength =
     Math.abs(r) >= 0.7 ? "Strong" :
@@ -97,10 +110,10 @@ function renderStats(data) {
   document.getElementById("rInterp").textContent =
     `${strength} ${direction}`;
 
-  document.getElementById("rSlope").textContent = reg.slope;
-  document.getElementById("rIntercept").textContent = reg.intercept;
-  document.getElementById("rSquared").textContent = reg.rSquared;
+  document.getElementById("rSlope").textContent = reg.slope.toFixed(4);
+  document.getElementById("rIntercept").textContent = reg.intercept.toFixed(4);
+  document.getElementById("rSquared").textContent = reg.rSquared.toFixed(4);
 
   document.getElementById("rEquation").textContent =
-    `rating = ${reg.slope}·reviews + ${reg.intercept}`;
+    `sales = ${reg.slope.toFixed(4)}·profit + ${reg.intercept.toFixed(4)}`;
 }
