@@ -1,7 +1,7 @@
 // LOAD DATASET
 async function loadDataset() {
   try {
-    const res = await fetch("bestsellers with categories.csv");
+    const res = await fetch("samplesuperstore.csv");
     const text = await res.text();
 
     const rows = text.trim().split(/\r?\n/).slice(1);
@@ -10,13 +10,27 @@ async function loadDataset() {
       const c = r.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
       return {
-        name: c[0]?.replace(/^"|"$/g, "").trim(),
-        author: c[1]?.trim(),
-        rating: +c[2],
-        reviews: +c[3],
-        price: +c[4],
-        year: +c[5],
-        genre: c[6]?.trim()
+        rowID: +c[0],
+        orderID: c[1],
+        orderDate: c[2],
+        shipDate: c[3],
+        shipMode: c[4],
+        customerID: c[5],
+        customerName: c[6],
+        segment: c[7],
+        country: c[8],
+        city: c[9],
+        state: c[10],
+        postalCode: c[11],
+        region: c[12],
+        productID: c[13],
+        category: c[14],
+        subCategory: c[15],
+        productName: c[16]?.replace(/^"|"$/g, "").trim(),
+        sales: +c[17],
+        quantity: +c[18],
+        discount: +c[19],
+        profit: +c[20]
       };
     });
 
@@ -36,13 +50,13 @@ function renderTable(data) {
     html += `
       <tr>
         <td>${index + 1}</td>
-        <td>${item.name}</td>
-        <td>${item.author}</td>
-        <td>${item.rating}</td>
-        <td>${item.reviews}</td>
-        <td>${item.price}</td>
-        <td>${item.year}</td>
-        <td>${item.genre}</td>
+        <td>${item.productName}</td>
+        <td>${item.category}</td>
+        <td>${item.subCategory}</td>
+        <td>${item.sales}</td>
+        <td>${item.quantity}</td>
+        <td>${item.discount}</td>
+        <td>${item.profit}</td>
       </tr>
     `;
   });

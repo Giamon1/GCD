@@ -37,6 +37,7 @@
     .table-container {
       max-height: 400px;
       overflow-y: auto;
+      overflow-x: auto;
       border: 1px solid #1f2937;
       border-radius: 8px;
       margin-top: 15px;
@@ -45,12 +46,14 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 900px;
     }
 
     th, td {
       border-bottom: 1px solid #31371f;
       padding: 10px;
       text-align: left;
+      white-space: nowrap;
     }
 
     th {
@@ -58,15 +61,20 @@
       position: sticky;
       top: 0;
       background: #0b0f19;
+      z-index: 1;
+    }
+
+    .chart-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
     .chart-container {
       width: 45%;
-      display: inline-block;
-      margin: 20px;
+      margin: 20px 0;
     }
 
-    /* STATS */
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -86,7 +94,7 @@
 
 <body>
 
-  <h1>Amazon Bestselling Books (2009-2019)</h1>
+  <h1>Superstore Sales Dataset</h1>
 
   <!-- CONTROLS -->
   <div class="controls">
@@ -94,13 +102,13 @@
 
     <select id="sort-select">
       <option value="">Sort by...</option>
-      <option value="name">Name</option>
-      <option value="author">Author</option>
-      <option value="rating">Rating</option>
-      <option value="reviews">Reviews</option>
-      <option value="price">Price</option>
-      <option value="year">Year</option>
-      <option value="genre">Genre</option>
+      <option value="productName">Product</option>
+      <option value="category">Category</option>
+      <option value="subCategory">Sub-Category</option>
+      <option value="sales">Sales</option>
+      <option value="quantity">Quantity</option>
+      <option value="discount">Discount</option>
+      <option value="profit">Profit</option>
     </select>
 
     <button id="apply-btn">Apply</button>
@@ -113,13 +121,13 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Name</th>
-          <th>Author</th>
-          <th>Rating</th>
-          <th>Reviews</th>
-          <th>Price</th>
-          <th>Year</th>
-          <th>Genre</th>
+          <th>Product</th>
+          <th>Category</th>
+          <th>Sub-Category</th>
+          <th>Sales</th>
+          <th>Quantity</th>
+          <th>Discount</th>
+          <th>Profit</th>
         </tr>
       </thead>
 
@@ -134,10 +142,12 @@
   <!-- CHARTS -->
   <h2>Visualizations</h2>
 
-  <div class="chart-container"><canvas id="barChart"></canvas></div>
-  <div class="chart-container"><canvas id="scatterPlot"></canvas></div>
-  <div class="chart-container"><canvas id="histogram"></canvas></div>
-  <div class="chart-container"><canvas id="pieChart"></canvas></div>
+  <div class="chart-grid">
+    <div class="chart-container"><canvas id="barChart"></canvas></div>
+    <div class="chart-container"><canvas id="scatterPlot"></canvas></div>
+    <div class="chart-container"><canvas id="histogram"></canvas></div>
+    <div class="chart-container"><canvas id="pieChart"></canvas></div>
+  </div>
 
   <!-- STATS -->
   <h2>Statistics Dashboard</h2>
